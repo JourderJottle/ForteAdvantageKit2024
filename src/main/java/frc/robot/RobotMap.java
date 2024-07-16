@@ -7,6 +7,11 @@ public class RobotMap {
     public static final double CHASSIS_WIDTH = 0;
     public static final double DRIVE_MAGNITUDE_GEAR_RATIO = 0;
     public static final double DRIVE_DIRECTION_GEAR_RATIO = 0;
+    public static final double DRIVE_DIRECTION_ABSOLUTE_ENCODER_UNITS_PER_ROTATION = 0;
+    public static final double FRONT_LEFT_ABSOLUTE_ENCODER_OFFSET = 0;
+    public static final double FRONT_RIGHT_ABSOLUTE_ENCODER_OFFSET = 0;
+    public static final double BACK_LEFT_ABSOLUTE_ENCODER_OFFSET = 0;
+    public static final double BACK_RIGHT_ABSOLUTE_ENCODER_OFFSET = 0;
 
     // Motor IDs
     public static final int FRONT_LEFT_MAGNITUDE_ID = 0;
@@ -20,4 +25,8 @@ public class RobotMap {
 
     // Other Device IDs
     public static final int PIGEON_ID = 0;
+    public static final int FRONT_LEFT_ABSOLUTE_ENCODER_ID = 0;
+    public static final int FRONT_RIGHT_ABSOLUTE_ENCODER_ID = 0;
+    public static final int BACK_LEFT_ABSOLUTE_ENCODER_ID = 0;
+    public static final int BACK_RIGHT_ABSOLUTE_ENCODER_ID = 0;
 }

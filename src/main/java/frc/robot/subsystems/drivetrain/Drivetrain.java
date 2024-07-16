@@ -17,10 +17,10 @@ public class Drivetrain extends SubsystemBase {
     GyroIOInputsAutoLogged gyroInputs;
 
     public Drivetrain(GyroIO gyro) {
-        this.frontLeft = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.FRONT_LEFT_MAGNITUDE_ID, RobotMap.FRONT_LEFT_DIRECTION_ID));
-        this.frontRight = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.FRONT_RIGHT_MAGNITUDE_ID, RobotMap.FRONT_RIGHT_DIRECTION_ID));
-        this.backLeft = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.BACK_LEFT_MAGNITUDE_ID, RobotMap.BACK_LEFT_DIRECTION_ID));
-        this.backRight = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.BACK_RIGHT_MAGNITUDE_ID, RobotMap.BACK_RIGHT_DIRECTION_ID));
+        this.frontLeft = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.FRONT_LEFT_MAGNITUDE_ID, RobotMap.FRONT_LEFT_DIRECTION_ID, RobotMap.FRONT_LEFT_ABSOLUTE_ENCODER_ID, RobotMap.FRONT_LEFT_ABSOLUTE_ENCODER_OFFSET));
+        this.frontRight = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.FRONT_RIGHT_MAGNITUDE_ID, RobotMap.FRONT_RIGHT_DIRECTION_ID, RobotMap.FRONT_RIGHT_ABSOLUTE_ENCODER_ID, RobotMap.FRONT_RIGHT_ABSOLUTE_ENCODER_OFFSET));
+        this.backLeft = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.BACK_LEFT_MAGNITUDE_ID, RobotMap.BACK_LEFT_DIRECTION_ID, RobotMap.BACK_LEFT_ABSOLUTE_ENCODER_ID, RobotMap.BACK_LEFT_ABSOLUTE_ENCODER_OFFSET));
+        this.backRight = new SwerveModule(new SwerveModuleIOSparkMax(RobotMap.BACK_RIGHT_MAGNITUDE_ID, RobotMap.BACK_RIGHT_DIRECTION_ID, RobotMap.BACK_RIGHT_ABSOLUTE_ENCODER_ID, RobotMap.BACK_RIGHT_ABSOLUTE_ENCODER_OFFSET));
 
         this.modules = new SwerveModule[] {this.frontLeft, this.frontRight, this.backLeft, this.backRight};
 

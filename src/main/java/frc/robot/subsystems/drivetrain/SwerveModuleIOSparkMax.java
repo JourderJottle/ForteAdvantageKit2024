@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
@@ -16,9 +17,10 @@ public class SwerveModuleIOSparkMax implements SwerveModuleIO {
     CANSparkMax magnitude, direction;
     SparkPIDController magnitudeController, directionController;
     RelativeEncoder magnitudeEncoder, directionEncoder;
+    DutyCycleEncoder absoluteEncoder;
     double targetMagnitude = 0, targetDirection = 0;
 
-    public SwerveModuleIOSparkMax(int magnitudeID, int directionID) {
+    public SwerveModuleIOSparkMax(int magnitudeID, int directionID, int encoderID, double encoderOffset) {
 
         this.magnitude = new CANSparkMax(magnitudeID, MotorType.kBrushless);
         this.direction = new CANSparkMax(directionID, MotorType.kBrushless);
@@ -44,6 +46,10 @@ public class SwerveModuleIOSparkMax implements SwerveModuleIO {
 
         this.magnitudeEncoder = magnitude.getEncoder();
         this.directionEncoder = direction.getEncoder();
+        this.absoluteEncoder = new DutyCycleEncoder(encoderID);
+
+        this.directionEncoder.setPosition((this.absoluteEncoder.getAbsolutePosition() - encoderOffset)
+        / RobotMap.DRIVE_DIRECTION_ABSOLUTE_ENCODER_UNITS_PER_ROTATION / RobotMap.DRIVE_DIRECTION_GEAR_RATIO);
 
         this.magnitudeEncoder.setVelocityConversionFactor(RobotMap.DRIVE_MAGNITUDE_GEAR_RATIO / RobotMap.DRIVE_WHEEL_CIRCUMFERENCE / 60);
         this.directionEncoder.setPositionConversionFactor(RobotMap.DRIVE_DIRECTION_GEAR_RATIO * 2 * Math.PI);
