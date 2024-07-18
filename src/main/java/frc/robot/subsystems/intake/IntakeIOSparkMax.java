@@ -11,36 +11,36 @@ import frc.robot.RobotMap;
 
 public class IntakeIOSparkMax implements IntakeIO {
     
-    CANSparkMax positionMotor, intakeMotor;
-    SparkPIDController positionMotorController;
-    RelativeEncoder positionMotorEncoder;
+    CANSparkMax position, intake;
+    SparkPIDController positionController;
+    RelativeEncoder positionEncoder;
     double positionTarget = 0, currentTarget = 0;
 
-    public IntakeIOSparkMax(int positionMotorID, int intakeMotorID) {
-        this.positionMotor = new CANSparkMax(positionMotorID, MotorType.kBrushless);
-        this.intakeMotor = new CANSparkMax(intakeMotorID, MotorType.kBrushless);
+    public IntakeIOSparkMax(int positionID, int intakeID) {
+        this.position = new CANSparkMax(positionID, MotorType.kBrushless);
+        this.intake = new CANSparkMax(intakeID, MotorType.kBrushless);
 
-        this.positionMotor.restoreFactoryDefaults();
-        this.intakeMotor.restoreFactoryDefaults();
+        this.position.restoreFactoryDefaults();
+        this.intake.restoreFactoryDefaults();
 
-        this.positionMotor.burnFlash();
-        this.intakeMotor.burnFlash();
+        this.position.burnFlash();
+        this.intake.burnFlash();
 
-        this.positionMotorController = this.positionMotor.getPIDController();
+        this.positionController = this.position.getPIDController();
 
-        this.positionMotorController.setP(Constants.INTAKE_POSITION_KP);
-        this.positionMotorController.setI(Constants.INTAKE_POSITION_KI);
-        this.positionMotorController.setD(Constants.INTAKE_POSITION_KD);
+        this.positionController.setP(Constants.INTAKE_POSITION_KP);
+        this.positionController.setI(Constants.INTAKE_POSITION_KI);
+        this.positionController.setD(Constants.INTAKE_POSITION_KD);
 
-        this.positionMotorEncoder = this.positionMotor.getEncoder();
+        this.positionEncoder = this.position.getEncoder();
 
-        this.positionMotorEncoder.setPositionConversionFactor(RobotMap.INTAKE_POSITION_GEAR_RATION);
+        this.positionEncoder.setPositionConversionFactor(RobotMap.INTAKE_POSITION_GEAR_RATIO);
     }
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.position = positionMotorEncoder.getPosition();
-        inputs.current = intakeMotor.getAppliedOutput();
+        inputs.position = positionEncoder.getPosition();
+        inputs.current = intake.getAppliedOutput();
         inputs.targetPosition = this.positionTarget;
         inputs.targetCurrent = this.currentTarget;
     }
@@ -48,17 +48,17 @@ public class IntakeIOSparkMax implements IntakeIO {
     @Override
     public void setPosition(double position) {
         this.positionTarget = position;
-        this.positionMotorController.setReference(position, ControlType.kPosition);
+        this.positionController.setReference(position, ControlType.kPosition);
     }
 
     @Override
     public void setCurrent(double current) {
         this.currentTarget = current;
-        this.intakeMotor.set(current);
+        this.intake.set(current);
     }
 
     @Override
     public double getPosition() {
-        return this.positionMotorEncoder.getPosition();
+        return this.positionEncoder.getPosition();
     }
 }
