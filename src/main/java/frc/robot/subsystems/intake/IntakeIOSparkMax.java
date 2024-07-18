@@ -14,7 +14,7 @@ public class IntakeIOSparkMax implements IntakeIO {
     CANSparkMax positionMotor, intakeMotor;
     SparkPIDController positionMotorController;
     RelativeEncoder positionMotorEncoder;
-    double positionTarget = 0, voltageTarget = 0;
+    double positionTarget = 0, currentTarget = 0;
 
     public IntakeIOSparkMax(int positionMotorID, int intakeMotorID) {
         this.positionMotor = new CANSparkMax(positionMotorID, MotorType.kBrushless);
@@ -39,26 +39,26 @@ public class IntakeIOSparkMax implements IntakeIO {
 
     @Override
     public void updateInputs(IntakeIOInputs inputs) {
-        inputs.intakePosition = positionMotorEncoder.getPosition();
-        inputs.intakeVoltage = intakeMotor.getAppliedOutput();
-        inputs.targetIntakePosition = this.positionTarget;
-        inputs.targetIntakeVoltage = this.voltageTarget;
+        inputs.position = positionMotorEncoder.getPosition();
+        inputs.current = intakeMotor.getAppliedOutput();
+        inputs.targetPosition = this.positionTarget;
+        inputs.targetCurrent = this.currentTarget;
     }
 
     @Override
-    public void setIntakePosition(double position) {
+    public void setPosition(double position) {
         this.positionTarget = position;
         this.positionMotorController.setReference(position, ControlType.kPosition);
     }
 
     @Override
-    public void setIntakeVoltage(double voltage) {
-        this.voltageTarget = voltage;
-        this.intakeMotor.set(voltage);
+    public void setCurrent(double current) {
+        this.currentTarget = current;
+        this.intakeMotor.set(current);
     }
 
     @Override
-    public double getIntakePosition() {
+    public double getPosition() {
         return this.positionMotorEncoder.getPosition();
     }
 }

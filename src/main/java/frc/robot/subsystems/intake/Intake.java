@@ -18,15 +18,15 @@ public class Intake extends SubsystemBase {
         this.io.updateInputs(this.inputs);
     }
 
-    public void setIntakeDown() {
-        this.io.setIntakePosition(Constants.INTAKE_DOWN_POSITION);
+    public void setDown() {
+        this.io.setPosition(Constants.INTAKE_DOWN_POSITION);
     }
 
-    public void setIntakeUp() {
-        this.io.setIntakePosition(Constants.INTAKE_UP_POSITION);
+    public void setUp() {
+        this.io.setPosition(Constants.INTAKE_UP_POSITION);
     }
 
-    public void setIntakeSpeed(double speed) {
-        this.io.setIntakeVoltage(speed);
+    public void setCurrent(double current) {
+        this.io.setCurrent(current);
     }
 }

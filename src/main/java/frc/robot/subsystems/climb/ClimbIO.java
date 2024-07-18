@@ -1,22 +1,20 @@
-package frc.robot.subsystems.intake;
+package frc.robot.subsystems.climb;
 
 import org.littletonrobotics.junction.AutoLog;
 
-public interface IntakeIO {
+public interface ClimbIO {
     
     @AutoLog
-    public static class IntakeIOInputs {
+    public static class ClimbIOInputs {
         public double position = 0;
         public double current = 0;
-        public double targetPosition = 0;
         public double targetCurrent = 0;
     }
 
-    public default void updateInputs(IntakeIOInputs inputs) {}
-
-    public default void setPosition(double position) {}
+    public default void updateInputs(ClimbIOInputs inputs) {}
 
     public default void setCurrent(double current) {}
 
     public default double getPosition() {return 0;}
+
 }
