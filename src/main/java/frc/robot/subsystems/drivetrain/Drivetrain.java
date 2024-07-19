@@ -4,6 +4,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -14,6 +16,7 @@ public class Drivetrain extends SubsystemBase {
     SwerveDriveKinematics kinematics;
     SwerveModule frontLeft, frontRight, backLeft, backRight;
     SwerveModule[] modules;
+    SwerveDriveOdometry odometry;
     GyroIO gyro;
     GyroIOInputsAutoLogged gyroInputs;
 
@@ -35,17 +38,26 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(-RobotMap.CHASSIS_WIDTH / 2, -RobotMap.CHASSIS_WIDTH / 2),
             new Translation2d(-RobotMap.CHASSIS_WIDTH / 2, RobotMap.CHASSIS_WIDTH / 2)
         });
+
+        odometry = new SwerveDriveOdometry(kinematics, new Rotation2d(this.gyro.getYaw()), this.getSwerveModulePositions());
     }
 
     @Override
     public void periodic() {
         for (SwerveModule sm : this.modules) sm.periodic();
         this.gyro.updateInputs(this.gyroInputs);
+        this.odometry.update(new Rotation2d(this.gyro.getYaw()), this.getSwerveModulePositions());
     }
 
     public void driveSwerve(double xSpeed, double ySpeed, double rotation) {
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotation, new Rotation2d(gyro.getYaw()));
         SwerveModuleState[] states = this.kinematics.toSwerveModuleStates(speeds);
         for (int i = 0; i < 4; i++) this.modules[i].setStateTarget(states[i]);
+    }
+
+    public SwerveModulePosition[] getSwerveModulePositions() {
+        SwerveModulePosition[] modulePositions = new SwerveModulePosition[4];
+        for (int i = 0; i < 4; i++) modulePositions[i] = this.modules[i].getPosition();
+        return modulePositions;
     }
 }

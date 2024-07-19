@@ -1,6 +1,7 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class SwerveModule {
@@ -10,14 +11,18 @@ public class SwerveModule {
 
     public SwerveModule(SwerveModuleIO io) {
         this.io = io;
-        inputs = new SwerveModuleIOInputsAutoLogged();
+        this.inputs = new SwerveModuleIOInputsAutoLogged();
     }
 
     public void periodic() {
-        io.updateInputs(inputs);
+        this.io.updateInputs(this.inputs);
     }
 
     public void setStateTarget(SwerveModuleState state) {
-        io.setStateTarget(SwerveModuleState.optimize(state, new Rotation2d(io.getDirection())));
+        this.io.setStateTarget(SwerveModuleState.optimize(state, new Rotation2d(this.io.getDirection())));
+    }
+
+    public SwerveModulePosition getPosition() {
+        return new SwerveModulePosition(this.io.getDistanceTraveled(), new Rotation2d(this.io.getDirection()));
     }
 }

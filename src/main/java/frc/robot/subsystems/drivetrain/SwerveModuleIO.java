@@ -20,6 +20,8 @@ public interface SwerveModuleIO {
 
     public default double getMagnitude() {return 0;}
 
+    public default double getDistanceTraveled() {return 0;}
+
     public default double getDirection() {return 0;}
     
     public default SwerveModuleState getState() {return null;}

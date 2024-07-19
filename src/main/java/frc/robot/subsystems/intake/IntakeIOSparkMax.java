@@ -34,7 +34,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
         this.positionEncoder = this.position.getEncoder();
 
-        this.positionEncoder.setPositionConversionFactor(RobotMap.INTAKE_POSITION_GEAR_RATIO);
+        this.positionEncoder.setPositionConversionFactor(2 * Math.PI / RobotMap.INTAKE_POSITION_GEAR_RATIO);
     }
 
     @Override

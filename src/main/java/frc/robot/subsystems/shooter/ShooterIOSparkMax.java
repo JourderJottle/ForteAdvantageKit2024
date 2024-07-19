@@ -48,8 +48,8 @@ public class ShooterIOSparkMax implements ShooterIO {
         this.positionEncoder = this.position.getEncoder();
         this.shooterEncoder = this.position.getEncoder();
 
-        this.positionEncoder.setPositionConversionFactor(RobotMap.SHOOTER_POSITION_GEAR_RATIO * 2 * Math.PI);
-        this.shooterEncoder.setVelocityConversionFactor(RobotMap.SHOOTER_SPEED_GEAR_RATIO / RobotMap.FLYWHEEL_CIRCUMFERENCE / 60);
+        this.positionEncoder.setPositionConversionFactor(2 * Math.PI / RobotMap.SHOOTER_POSITION_GEAR_RATIO);
+        this.shooterEncoder.setVelocityConversionFactor(RobotMap.FLYWHEEL_CIRCUMFERENCE / RobotMap.SHOOTER_SPEED_GEAR_RATIO / 60);
     }
 
     @Override

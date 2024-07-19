@@ -51,8 +51,9 @@ public class SwerveModuleIOSparkMax implements SwerveModuleIO {
         this.directionEncoder.setPosition((this.absoluteEncoder.getAbsolutePosition() - encoderOffset)
         / RobotMap.DRIVE_DIRECTION_ABSOLUTE_ENCODER_UNITS_PER_ROTATION / RobotMap.DRIVE_DIRECTION_GEAR_RATIO);
 
-        this.magnitudeEncoder.setVelocityConversionFactor(RobotMap.DRIVE_MAGNITUDE_GEAR_RATIO / RobotMap.DRIVE_WHEEL_CIRCUMFERENCE / 60);
-        this.directionEncoder.setPositionConversionFactor(RobotMap.DRIVE_DIRECTION_GEAR_RATIO * 2 * Math.PI);
+        this.magnitudeEncoder.setVelocityConversionFactor(RobotMap.DRIVE_WHEEL_CIRCUMFERENCE / RobotMap.DRIVE_MAGNITUDE_GEAR_RATIO / 60);
+        this.magnitudeEncoder.setPositionConversionFactor(RobotMap.DRIVE_WHEEL_CIRCUMFERENCE / RobotMap.DRIVE_MAGNITUDE_GEAR_RATIO);
+        this.directionEncoder.setPositionConversionFactor(2 * Math.PI / RobotMap.DRIVE_DIRECTION_GEAR_RATIO);
 
     }
 
@@ -75,6 +76,11 @@ public class SwerveModuleIOSparkMax implements SwerveModuleIO {
     @Override
     public double getMagnitude() {
         return this.magnitudeEncoder.getVelocity();
+    }
+
+    @Override
+    public double getDistanceTraveled() {
+        return this.magnitudeEncoder.getPosition();
     }
 
     @Override
